@@ -1,0 +1,23 @@
+ Create an instance, install apache server(using start-up script) and add an index.html file. Create a robust web server with the use of auto scaling and load balancing.
+
+Deliverable :- start-up script, security group rules, Listener configuration, steps
+
+START UP SCRIPT :-
+
+#!/bin/bash
+yum update -y
+yum install -y httpd
+systemctl start httpd
+systemctl enable httpd
+usermod -a -G apache ec2-user
+chown -R ec2-user:apache /var/www
+chmod 2775 /var/www
+find /var/www -type d -exec chmod 2775 {} \;
+find /var/www -type f -exec chmod 0664 {} \;
+echo "<h1>Hello SHRIRAM</h1>" > /var/www/html/index.html
+service httpd start
+
+Security group rules :  Allow all HTTP AND HTTPS traffic (from the internet 0.0.0.0/0). Restrict SSH access only to my IP
+
+INBOUND RULES
+
